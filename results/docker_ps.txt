@@ -1,0 +1,20 @@
+$ docker compose ps -a
+NAME            IMAGE                    STATUS                      PORTS
+regl-pgvector   pgvector/pgvector:pg17   Up 3 minutes (healthy)      0.0.0.0:54320->5432/tcp, [::]:54320->5432/tcp
+regl-rag        regl-rag-app             Exited (0) 55 seconds ago
+
+$ docker stats --no-stream
+NAME            MEM USAGE / LIMIT
+regl-pgvector   55.67MiB / 7.381GiB
+
+$ ls -l docs/ | awk '{print $5, $9}'
+37492 01_otpuska.docx
+27291 02_komandirovki.pdf
+28113 03_paroli.pdf
+37399 04_udalenka.docx
+24283 05_zakupki.pdf
+37362 06_incidenty.docx
+25438 07_pdn.pdf
+37273 08_onboarding.docx
+25010 09_taxi_svyaz.pdf
+37298 10_rasporyadok.docx

@@ -1,0 +1,22 @@
+make_docs: created 9, total 10 files in /docs
+  01_otpuska.docx: 5 sections -> 5 chunks
+  02_komandirovki.pdf: 4 sections -> 4 chunks
+  03_paroli.pdf: 4 sections -> 4 chunks
+  04_udalenka.docx: 4 sections -> 4 chunks
+  05_zakupki.pdf: 4 sections -> 4 chunks
+  06_incidenty.docx: 4 sections -> 4 chunks
+  07_pdn.pdf: 4 sections -> 4 chunks
+  08_onboarding.docx: 4 sections -> 4 chunks
+  09_taxi_svyaz.pdf: 3 sections -> 3 chunks
+  10_rasporyadok.docx: 4 sections -> 4 chunks
+ingest: {'new_or_changed': 10, 'skipped_unchanged': 0, 'chunks': 40}; in db: 40 chunks, avg 190 chars, max 261
+Вопросов в эталоне: 25
+
+| Режим | Recall@1 | Recall@3 | Recall@5 | MRR@5 |
+|---|---|---|---|---|
+| vector | 0.80 | 0.92 | 1.00 | 0.87 |
+| fulltext | 0.64 | 0.76 | 0.80 | 0.70 |
+| hybrid | 0.76 | 1.00 | 1.00 | 0.85 |
+
+Промахи гибрида (нет нужного раздела в топ-5):
+- нет

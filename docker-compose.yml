@@ -1,0 +1,32 @@
+name: regl-rag
+
+services:
+  vectordb:
+    image: pgvector/pgvector:pg17
+    container_name: regl-pgvector
+    environment:
+      POSTGRES_DB: rag
+      POSTGRES_PASSWORD: postgres
+    ports: ["54320:5432"]
+    volumes: ["./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro"]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "rag"]
+      interval: 3s
+      retries: 20
+
+  rag:  # одноразовый прогон: генерация корпуса -> загрузка -> оценка; ask.py запускается через `run`
+    build: ./app
+    image: regl-rag-app
+    container_name: regl-rag
+    depends_on:
+      vectordb: {condition: service_healthy}
+    environment:
+      PG_DSN: postgresql://postgres:postgres@vectordb:5432/rag
+      EMBED_MODEL: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+      FASTEMBED_CACHE_PATH: /models
+    volumes:
+      - ./docs:/docs
+      - ./results:/results
+      - ./models_cache:/models   # кэш модели (скачивается один раз)
+    command: ["sh", "-c", "python make_docs.py && python ingest.py && python eval.py"]
+    restart: "no"
